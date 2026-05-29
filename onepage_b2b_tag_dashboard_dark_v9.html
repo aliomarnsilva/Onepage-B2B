@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OnePage Retenção B2B</title>
-</head>
-<body style="background:#111111;margin:0;">
+
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   .dash { font-family: var(--font-sans); background: #111111; width: 100%; padding: 16px; }
@@ -86,7 +79,6 @@
   </div>
 
   <div class="cols">
-
     <!-- CORE -->
     <div class="panel">
       <div class="panel-title-bar" style="background:#D60B52;">
@@ -102,14 +94,12 @@
           <div class="repr-card"><div class="rc-label">OL</div><div class="rc-val">5K</div><div class="rc-sub">Cancelamentos</div></div>
           <div class="repr-card alt-card"><div class="rc-label">Delta</div><div class="rc-val">50%</div><div class="rc-sub">Cancelamentos</div></div>
         </div>
-
         <div class="section-label">Taxa &amp; Ticket — evolução mensal</div>
         <div class="legend-row">
           <div class="legend-item"><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#ccc" stroke-width="2"/><circle cx="11" cy="5" r="3" fill="#ccc"/></svg>Taxa (%)</div>
           <div class="legend-item"><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#D60B52" stroke-width="2" stroke-dasharray="4,2"/><rect x="8" y="2" width="6" height="6" transform="rotate(45 11 5)" fill="#D60B52"/></svg>Ticket</div>
         </div>
         <div class="chart-wrap"><canvas id="coreCombo"></canvas></div>
-
         <div class="section-label">Indicadores — mai/26</div>
         <div class="ind-list">
           <div class="ind-item"><div class="ind-label">Taxa</div><div class="ind-track"><div class="ind-fill" style="width:56.7%;background:#ccc;"></div></div><div class="ind-val">56,7%</div></div>
@@ -120,7 +110,6 @@
           <div class="ind-item"><div class="ind-label">Rechamada</div><div class="ind-track"><div class="ind-fill" style="width:10%;background:#666;"></div></div><div class="ind-val">10%</div></div>
           <div class="ind-item"><div class="ind-label">CSAT</div><div class="ind-track"><div class="ind-fill" style="width:80%;background:#e05a8a;"></div></div><div class="ind-val">80%</div></div>
         </div>
-
         <hr class="divider">
         <div class="section-label">Histórico de indicadores</div>
         <table class="mini-table">
@@ -154,14 +143,12 @@
           <div class="repr-card"><div class="rc-label">OL</div><div class="rc-val">7,5K</div><div class="rc-sub">Cancelamentos</div></div>
           <div class="repr-card alt-card"><div class="rc-label">Delta</div><div class="rc-val">50%</div><div class="rc-sub">Cancelamentos</div></div>
         </div>
-
         <div class="section-label">Taxa &amp; Ticket — evolução mensal</div>
         <div class="legend-row">
           <div class="legend-item"><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#ccc" stroke-width="2"/><circle cx="11" cy="5" r="3" fill="#ccc"/></svg>Taxa (%)</div>
           <div class="legend-item"><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#D60B52" stroke-width="2" stroke-dasharray="4,2"/><rect x="8" y="2" width="6" height="6" transform="rotate(45 11 5)" fill="#D60B52"/></svg>Ticket</div>
         </div>
         <div class="chart-wrap"><canvas id="maxCombo"></canvas></div>
-
         <div class="section-label">Indicadores — mai/26</div>
         <div class="ind-list">
           <div class="ind-item"><div class="ind-label">Taxa</div><div class="ind-track"><div class="ind-fill" style="width:86%;background:#ccc;"></div></div><div class="ind-val">86,0%</div></div>
@@ -172,7 +159,6 @@
           <div class="ind-item"><div class="ind-label">Rechamada</div><div class="ind-track"><div class="ind-fill" style="width:10%;background:#666;"></div></div><div class="ind-val">10%</div></div>
           <div class="ind-item"><div class="ind-label">CSAT</div><div class="ind-track"><div class="ind-fill" style="width:80%;background:#e05a8a;"></div></div><div class="ind-val">80%</div></div>
         </div>
-
         <hr class="divider">
         <div class="section-label">Histórico de indicadores</div>
         <table class="mini-table">
@@ -190,7 +176,6 @@
         <div class="footnote">*CR previsto Maio</div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -206,18 +191,23 @@ const labelPlugin = {
     chart.data.datasets.forEach((ds, di) => {
       const meta = chart.getDatasetMeta(di);
       if (meta.hidden) return;
-      const otherMeta = chart.getDatasetMeta(di === 0 ? 1 : 0);
       meta.data.forEach((pt, i) => {
         const val = ds.data[i];
         if (val == null) return;
         const isTaxa = di === 0;
+        const isMai = i === 4; // último mês = maio, não mexer
         const label = isTaxa ? val.toFixed(1) + '%' : val.toFixed(2);
         const color = isTaxa ? '#cccccc' : pink;
-        const otherPt = otherMeta.data[i];
-        // lower y = higher on screen; place label away from the other line
-        const taxaIsAbove = pt.y <= (otherPt ? otherPt.y : pt.y);
-        const above = isTaxa ? taxaIsAbove : !taxaIsAbove;
-        const yOff = above ? -12 : 14;
+
+        let yOff;
+        if (isMai) {
+          // Maio: comportamento original — taxa acima, ticket abaixo
+          yOff = isTaxa ? -10 : 12;
+        } else {
+          // jan–abr: taxa abaixo, ticket acima
+          yOff = isTaxa ? 12 : -10;
+        }
+
         ctx.save();
         ctx.font = '500 8.5px sans-serif';
         ctx.fillStyle = color;
@@ -282,7 +272,7 @@ function makeCombo(id, taxaVals, ticketVals) {
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      layout: { padding: { top: 18, bottom: 14, left: 6, right: 6 } },
+      layout: { padding: { top: 18, bottom: 18, left: 6, right: 6 } },
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
@@ -308,5 +298,3 @@ function makeCombo(id, taxaVals, ticketVals) {
 makeCombo('coreCombo', [52.8,51.5,51.5,53.1,56.7], [-7.0,-7.0,-7.1,-7.3,-7.5]);
 makeCombo('maxCombo',  [87.5,86.8,86.7,87.0,86.0], [-9.97,-7.64,-7.64,-9.03,-10.18]);
 </script>
-</body>
-</html>
