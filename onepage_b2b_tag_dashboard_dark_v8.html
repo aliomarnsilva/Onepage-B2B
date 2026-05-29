@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnePage Retenção B2B</title>
+</head>
+<body style="background:#111111;margin:0;">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .dash { font-family: var(--font-sans); background: #111111; width: 100%; padding: 16px; }
+  .dash-header { position: relative; background: #0d0d0d; border-radius: 12px; margin-bottom: 12px; overflow: hidden; padding: 22px 32px 20px; min-height: 90px; }
+  .header-lines { position: absolute; top: 0; right: 0; width: 60%; height: 100%; pointer-events: none; }
+  .header-content { position: relative; z-index: 2; }
+  .header-accent { width: 48px; height: 3px; background: #D60B52; margin-bottom: 8px; border-radius: 2px; }
+  .header-title { font-size: 32px; font-weight: 900; color: #fff; letter-spacing: 1px; text-transform: uppercase; line-height: 1; margin-bottom: 6px; }
+  .header-sub { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+  .pill { font-size: 11px; font-weight: 700; color: #fff; padding: 2px 10px; border-radius: 4px; letter-spacing: 1.2px; }
+  .pill-core { background: #D60B52; }
+  .pill-max  { background: #510A27; border: 1px solid #7a1040; }
+  .header-amp { color: #888; font-weight: 400; }
+  .header-perf { color: #ccc; font-weight: 600; letter-spacing: 2px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .panel { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #2a2a2a; }
+  .panel-title-bar { padding: 10px 18px; display: flex; align-items: center; gap: 10px; border-radius: 12px 12px 0 0; }
+  .panel-title-bar .pt-name { font-size: 16px; font-weight: 500; color: #fff; letter-spacing: 2.5px; text-transform: uppercase; }
+  .panel-title-bar .pt-pub { font-size: 11px; color: rgba(255,255,255,0.65); margin-left: 4px; }
+  .panel-body { padding: 16px 18px 20px; }
+  .cards-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .repr-card { background: #242424; border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; align-items: center; gap: 1px; border: 1px solid #2e2e2e; }
+  .repr-card .rc-label { font-size: 9px; color: #888; letter-spacing: 0.8px; text-transform: uppercase; }
+  .repr-card .rc-val { font-size: 18px; font-weight: 500; color: #D60B52; }
+  .repr-card .rc-sub { font-size: 9px; color: #666; }
+  .repr-card.alt-card .rc-val { color: #e05a8a; }
+  .section-label { font-size: 9px; font-weight: 500; color: #666; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px; margin-top: 2px; }
+  .chart-wrap { position: relative; width: 100%; height: 185px; margin-bottom: 14px; }
+  .legend-row { display: flex; gap: 12px; margin-bottom: 5px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 9px; color: #888; }
+  .ind-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .ind-item { display: grid; grid-template-columns: 80px 1fr 44px; align-items: center; gap: 8px; }
+  .ind-label { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 0.8px; text-align: right; }
+  .ind-track { height: 4px; background: #333; border-radius: 2px; overflow: hidden; }
+  .ind-fill { height: 100%; border-radius: 2px; }
+  .ind-val { font-size: 12px; font-weight: 500; color: #e0e0e0; text-align: left; white-space: nowrap; }
+  .divider { border: none; border-top: 1px solid #2a2a2a; margin: 12px 0; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 4px; }
+  .mini-table th { font-size: 8px; color: #666; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 4px; border-bottom: 1px solid #2e2e2e; text-align: right; }
+  .mini-table th:first-child { text-align: left; }
+  .mini-table td { padding: 3px 4px; color: #ccc; text-align: right; border-bottom: 0.5px solid #232323; }
+  .mini-table td:first-child { text-align: left; color: #777; }
+  .mini-table tr:last-child td { border-bottom: none; }
+  .footnote { font-size: 9px; color: #555; margin-top: 4px; }
+</style>
+
+<div class="dash">
+  <div class="dash-header">
+    <svg class="header-lines" viewBox="0 0 600 120" preserveAspectRatio="xMaxYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fadeLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#0d0d0d" stop-opacity="1"/>
+          <stop offset="35%" stop-color="#0d0d0d" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g stroke="#D60B52" stroke-width="0.8" opacity="0.55">
+        <line x1="80"  y1="-20" x2="-60" y2="160"/><line x1="120" y1="-20" x2="-20" y2="160"/>
+        <line x1="160" y1="-20" x2="20"  y2="160"/><line x1="200" y1="-20" x2="60"  y2="160"/>
+        <line x1="240" y1="-20" x2="100" y2="160"/><line x1="280" y1="-20" x2="140" y2="160"/>
+        <line x1="320" y1="-20" x2="180" y2="160"/><line x1="360" y1="-20" x2="220" y2="160"/>
+        <line x1="400" y1="-20" x2="260" y2="160"/><line x1="440" y1="-20" x2="300" y2="160"/>
+        <line x1="480" y1="-20" x2="340" y2="160"/><line x1="520" y1="-20" x2="380" y2="160"/>
+        <line x1="560" y1="-20" x2="420" y2="160"/><line x1="600" y1="-20" x2="460" y2="160"/>
+        <line x1="640" y1="-20" x2="500" y2="160"/><line x1="680" y1="-20" x2="540" y2="160"/>
+      </g>
+      <rect x="0" y="0" width="600" height="120" fill="url(#fadeLeft)"/>
+    </svg>
+    <div class="header-content">
+      <div class="header-accent"></div>
+      <div class="header-title">OnePage Retenção B2B</div>
+      <div class="header-sub">
+        <span class="pill pill-core">CORE</span>
+        <span class="header-amp">&amp;</span>
+        <span class="pill pill-max">MAX</span>
+        <span class="header-perf">Performance</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols">
+
+    <!-- CORE -->
+    <div class="panel">
+      <div class="panel-title-bar" style="background:#D60B52;">
+        <span class="pt-name">Core</span>
+        <span class="pt-pub">Clientes com 1 a 3 Tag's</span>
+      </div>
+      <div class="panel-body">
+        <div class="cards-grid">
+          <div class="repr-card"><div class="rc-label">Clientes</div><div class="rc-val">179K</div><div class="rc-sub">Representatividade</div></div>
+          <div class="repr-card"><div class="rc-label">TAGs</div><div class="rc-val">251K</div><div class="rc-sub">Total de Tags</div></div>
+          <div class="repr-card alt-card"><div class="rc-label">Base</div><div class="rc-val">13%</div><div class="rc-sub">Participação</div></div>
+          <div class="repr-card"><div class="rc-label">Budget</div><div class="rc-val">10K</div><div class="rc-sub">Cancelamentos</div></div>
+          <div class="repr-card"><div class="rc-label">OL</div><div class="rc-val">5K</div><div class="rc-sub">Cancelamentos</div></div>
+          <div class="repr-card alt-card"><div class="rc-label">Delta</div><div class="rc-val">50%</div><div class="rc-sub">Cancelamentos</div></div>
+        </div>
+
+        <div class="section-label">Taxa &amp; Ticket — evolução mensal</div>
+        <div class="legend-row">
+          <div class="legend-item"><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#ccc" stroke-width="2"/><circle cx="11" cy="5" r="3" fill="#ccc"/></svg>Taxa (%)</div>
+          <div class="legend-item"><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#D60B52" stroke-width="2" stroke-dasharray="4,2"/><rect x="8" y="2" width="6" height="6" transform="rotate(45 11 5)" fill="#D60B52"/></svg>Ticket</div>
+        </div>
+        <div class="chart-wrap"><canvas id="coreCombo"></canvas></div>
+
+        <div class="section-label">Indicadores — mai/26</div>
+        <div class="ind-list">
+          <div class="ind-item"><div class="ind-label">Taxa</div><div class="ind-track"><div class="ind-fill" style="width:56.7%;background:#ccc;"></div></div><div class="ind-val">56,7%</div></div>
+          <div class="ind-item"><div class="ind-label">Ticket</div><div class="ind-track"><div class="ind-fill" style="width:75%;background:#D60B52;"></div></div><div class="ind-val">-7,5</div></div>
+          <div class="ind-item"><div class="ind-label">CR</div><div class="ind-track"><div class="ind-fill" style="width:27%;background:#D60B52;"></div></div><div class="ind-val">0,27%</div></div>
+          <div class="ind-item"><div class="ind-label">NS</div><div class="ind-track"><div class="ind-fill" style="width:85%;background:#D60B52;"></div></div><div class="ind-val">85%</div></div>
+          <div class="ind-item"><div class="ind-label">TMA</div><div class="ind-track"><div class="ind-fill" style="width:50%;background:#666;"></div></div><div class="ind-val">500</div></div>
+          <div class="ind-item"><div class="ind-label">Rechamada</div><div class="ind-track"><div class="ind-fill" style="width:10%;background:#666;"></div></div><div class="ind-val">10%</div></div>
+          <div class="ind-item"><div class="ind-label">CSAT</div><div class="ind-track"><div class="ind-fill" style="width:80%;background:#e05a8a;"></div></div><div class="ind-val">80%</div></div>
+        </div>
+
+        <hr class="divider">
+        <div class="section-label">Histórico de indicadores</div>
+        <table class="mini-table">
+          <thead><tr><th>KPI</th><th>jan/26</th><th>fev/26</th><th>mar/26</th><th>abr/26</th><th>mai/26</th></tr></thead>
+          <tbody>
+            <tr><td>Taxa</td><td>52,8%</td><td>51,5%</td><td>51,5%</td><td>53,1%</td><td>56,7%</td></tr>
+            <tr><td>Ticket</td><td>-7,0</td><td>-7,0</td><td>-7,1</td><td>-7,3</td><td>-7,5</td></tr>
+            <tr><td>CR</td><td>0,39%</td><td>0,38%</td><td>0,45%</td><td>0,39%</td><td>0,27%</td></tr>
+            <tr><td>NS</td><td>85%</td><td>85%</td><td>85%</td><td>85%</td><td>85%</td></tr>
+            <tr><td>TMA</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td></tr>
+            <tr><td>Rechamada</td><td>10%</td><td>10%</td><td>10%</td><td>10%</td><td>10%</td></tr>
+            <tr><td>CSAT</td><td>80%</td><td>80%</td><td>80%</td><td>80%</td><td>80%</td></tr>
+          </tbody>
+        </table>
+        <div class="footnote">*CR previsto Maio</div>
+      </div>
+    </div>
+
+    <!-- MAX -->
+    <div class="panel">
+      <div class="panel-title-bar" style="background:#510A27;">
+        <span class="pt-name">Max</span>
+        <span class="pt-pub">Clientes com 4 a 30 Tag's</span>
+      </div>
+      <div class="panel-body">
+        <div class="cards-grid">
+          <div class="repr-card"><div class="rc-label">Clientes</div><div class="rc-val">71K</div><div class="rc-sub">Representatividade</div></div>
+          <div class="repr-card"><div class="rc-label">TAGs</div><div class="rc-val">609K</div><div class="rc-sub">Total de Tags</div></div>
+          <div class="repr-card alt-card"><div class="rc-label">Base</div><div class="rc-val">5%</div><div class="rc-sub">Participação</div></div>
+          <div class="repr-card"><div class="rc-label">Budget</div><div class="rc-val">15K</div><div class="rc-sub">Cancelamentos</div></div>
+          <div class="repr-card"><div class="rc-label">OL</div><div class="rc-val">7,5K</div><div class="rc-sub">Cancelamentos</div></div>
+          <div class="repr-card alt-card"><div class="rc-label">Delta</div><div class="rc-val">50%</div><div class="rc-sub">Cancelamentos</div></div>
+        </div>
+
+        <div class="section-label">Taxa &amp; Ticket — evolução mensal</div>
+        <div class="legend-row">
+          <div class="legend-item"><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#ccc" stroke-width="2"/><circle cx="11" cy="5" r="3" fill="#ccc"/></svg>Taxa (%)</div>
+          <div class="legend-item"><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#D60B52" stroke-width="2" stroke-dasharray="4,2"/><rect x="8" y="2" width="6" height="6" transform="rotate(45 11 5)" fill="#D60B52"/></svg>Ticket</div>
+        </div>
+        <div class="chart-wrap"><canvas id="maxCombo"></canvas></div>
+
+        <div class="section-label">Indicadores — mai/26</div>
+        <div class="ind-list">
+          <div class="ind-item"><div class="ind-label">Taxa</div><div class="ind-track"><div class="ind-fill" style="width:86%;background:#ccc;"></div></div><div class="ind-val">86,0%</div></div>
+          <div class="ind-item"><div class="ind-label">Ticket</div><div class="ind-track"><div class="ind-fill" style="width:80%;background:#D60B52;"></div></div><div class="ind-val">-10,18</div></div>
+          <div class="ind-item"><div class="ind-label">CR</div><div class="ind-track"><div class="ind-fill" style="width:25%;background:#D60B52;"></div></div><div class="ind-val">0,25%</div></div>
+          <div class="ind-item"><div class="ind-label">NS</div><div class="ind-track"><div class="ind-fill" style="width:85%;background:#e05a8a;"></div></div><div class="ind-val">85%</div></div>
+          <div class="ind-item"><div class="ind-label">TMA</div><div class="ind-track"><div class="ind-fill" style="width:50%;background:#666;"></div></div><div class="ind-val">500</div></div>
+          <div class="ind-item"><div class="ind-label">Rechamada</div><div class="ind-track"><div class="ind-fill" style="width:10%;background:#666;"></div></div><div class="ind-val">10%</div></div>
+          <div class="ind-item"><div class="ind-label">CSAT</div><div class="ind-track"><div class="ind-fill" style="width:80%;background:#e05a8a;"></div></div><div class="ind-val">80%</div></div>
+        </div>
+
+        <hr class="divider">
+        <div class="section-label">Histórico de indicadores</div>
+        <table class="mini-table">
+          <thead><tr><th>KPI</th><th>jan/26</th><th>fev/26</th><th>mar/26</th><th>abr/26</th><th>mai/26</th></tr></thead>
+          <tbody>
+            <tr><td>Taxa</td><td>87,5%</td><td>86,8%</td><td>86,7%</td><td>87,0%</td><td>86,0%</td></tr>
+            <tr><td>Ticket</td><td>-9,97</td><td>-7,64</td><td>-7,64</td><td>-9,03</td><td>-10,18</td></tr>
+            <tr><td>CR</td><td>0,39%</td><td>0,39%</td><td>0,48%</td><td>0,41%</td><td>0,25%</td></tr>
+            <tr><td>NS</td><td>85%</td><td>85%</td><td>85%</td><td>85%</td><td>85%</td></tr>
+            <tr><td>TMA</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td></tr>
+            <tr><td>Rechamada</td><td>10%</td><td>10%</td><td>10%</td><td>10%</td><td>10%</td></tr>
+            <tr><td>CSAT</td><td>80%</td><td>80%</td><td>80%</td><td>80%</td><td>80%</td></tr>
+          </tbody>
+        </table>
+        <div class="footnote">*CR previsto Maio</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const months = ['jan/26','fev/26','mar/26','abr/26','mai/26'];
+const pink = '#D60B52';
+
+const labelPlugin = {
+  id: 'splitLabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    chart.data.datasets.forEach((ds, di) => {
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      meta.data.forEach((pt, i) => {
+        const val = ds.data[i];
+        if (val == null) return;
+        const isTaxa = di === 0;
+        const label = isTaxa ? val.toFixed(1) + '%' : val.toFixed(2);
+        const color = isTaxa ? '#cccccc' : pink;
+        const yOff = isTaxa ? -10 : 12;
+        ctx.save();
+        ctx.font = '500 8.5px sans-serif';
+        ctx.fillStyle = color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(label, pt.x, pt.y + yOff);
+        ctx.restore();
+      });
+    });
+  }
+};
+
+const diamondPlugin = {
+  id: 'diamondPoints',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    const meta = chart.getDatasetMeta(1);
+    if (!meta || meta.hidden) return;
+    meta.data.forEach(pt => {
+      ctx.save();
+      ctx.translate(pt.x, pt.y);
+      ctx.rotate(Math.PI / 4);
+      ctx.fillStyle = pink;
+      ctx.strokeStyle = '#1a1a1a';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.rect(-4, -4, 8, 8);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    });
+  }
+};
+
+Chart.register(labelPlugin, diamondPlugin);
+
+function makeCombo(id, taxaVals, ticketVals) {
+  const tMin = Math.min(...taxaVals) - 3;
+  const tMax = Math.max(...taxaVals) + 3;
+  const kMin = Math.min(...ticketVals) - 1.5;
+  const kMax = Math.max(...ticketVals) + 1.5;
+  new Chart(document.getElementById(id), {
+    data: {
+      labels: months,
+      datasets: [
+        {
+          type: 'line', label: 'Taxa', data: taxaVals,
+          borderColor: '#cccccc', backgroundColor: 'rgba(200,200,200,0.07)',
+          borderWidth: 2, pointStyle: 'circle',
+          pointBackgroundColor: '#cccccc', pointBorderColor: '#cccccc',
+          pointRadius: 4, pointHoverRadius: 6,
+          fill: true, tension: 0.35, yAxisID: 'yL'
+        },
+        {
+          type: 'line', label: 'Ticket', data: ticketVals,
+          borderColor: pink, backgroundColor: 'transparent',
+          borderWidth: 2, borderDash: [5, 3],
+          pointStyle: 'rect', pointRadius: 0, pointHoverRadius: 0,
+          fill: false, tension: 0.35, yAxisID: 'yR'
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 18, bottom: 14, left: 6, right: 6 } },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#2a2a2a', titleColor: '#aaa', bodyColor: '#ddd',
+          borderColor: '#3a3a3a', borderWidth: 1,
+          callbacks: {
+            label: ctx => ctx.datasetIndex === 0
+              ? ' Taxa: ' + ctx.parsed.y.toFixed(1) + '%'
+              : ' Ticket: ' + ctx.parsed.y.toFixed(2)
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { font: { size: 9 }, color: '#666', autoSkip: false }, grid: { display: false }, border: { display: false } },
+        yL: { type: 'linear', position: 'left', min: tMin, max: tMax, display: false, grid: { display: false } },
+        yR: { type: 'linear', position: 'right', min: kMin, max: kMax, reverse: true, display: false, grid: { display: false } }
+      }
+    }
+  });
+}
+
+makeCombo('coreCombo', [52.8,51.5,51.5,53.1,56.7], [-7.0,-7.0,-7.1,-7.3,-7.5]);
+makeCombo('maxCombo',  [87.5,86.8,86.7,87.0,86.0], [-9.97,-7.64,-7.64,-9.03,-10.18]);
+</script>
+</body>
+</html>
